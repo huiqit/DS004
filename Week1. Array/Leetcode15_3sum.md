@@ -11,8 +11,18 @@ class Solution {
     if(nums == null || nums.length == 0) {
       return res;
     }
-    
-  
+    Arrays.sort(nums);
+    for(int i = 0; i < nums.length - 2; i++) {
+      // find 
+      Set<Integer> set = new HashSet<>();
+      for(int j = i + 1; j < nums.length - 1; j++) {
+        if(set.contains(-nums[i]-nums[j])) {
+          res.add(new ArrayList<>(nums[i], -nums[i]-nums[j], nums[j]));
+        }
+        set.add(nums[j]);
+      }
+    }
+    return res;
   }
 }
 ```
