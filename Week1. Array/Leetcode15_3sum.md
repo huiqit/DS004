@@ -1,7 +1,5 @@
 ## Leetcode15. 3Sum  
-题意：在给定的array里找到3个数，使得它们之和等于0. 返回所有组合。  
-[Link](https://leetcode.com/problems/3sum/)  
-
+题意：在给定的array里找到3个数，使得它们之和等于0. 返回所有组合。[Link](https://leetcode.com/problems/3sum/)  
 这题是基于大名鼎鼎的two sum来做的，那么我们先来看一下two sum。
 ### Two Sum
 这题有很多问法depends on题目给的条件是什么，所以面试时要先clarify问题：
@@ -125,3 +123,51 @@ class Solution {
   }
 }
 ```
+### 4Sum
+继续4Sum，那很自然的想到两层循环+two sum，O(n^3). 那能否再优化点呢？
+在两层循环那里，把sum记录下来，且把index记录下来，这样在这个index之后做two sum；
+那对应的一个sum可能会有多个index pair，是否需要都记下来呢？都记下来worst case还是O(n^3)啊。。  
+这个要看返回什么，如果只是返回boolean，那就只记录最小的j1就好了；但leecode这题需要返回所有pair，所以要记录下来所有的pair且因为有duplicates 所以需要去重  
+Time = O(n^2)  
+Space = O(n)  
+
+```java
+class Solution {
+  public List<List<Integer>> fourSum(int[] nums, int target) {
+    Set<List<Integer>> set = new HashSet<>();
+    Map<Integer, List<List<Integer>>> map = new HashMap<>();
+    Arrays.sort(nums);
+    // 先处理第一对，把它们的sum存下来
+    for(int i = 0; i < nums.length - 3; i++) {
+      for(int j = i + 1; j < nums.length - 2; j++) {
+        int currSum = nums[i] + nums[j];
+        List<List<Integer>> pairs = map.getOrDefault(currSum, new ArrayList<>());
+        pairs.add(Arrays.asList(i, j));
+        map.put(currSum, pairs);
+      }
+    }
+    
+    // 在其后做two sum
+    for(int i = 2; i < nums.length - 1; i++) {
+      for(int j = i + 1; j < nums.length; j++) {
+        int currSum = nums[i] + nums[j];
+        List<List<Integer>> prevPairs = map.get(target - currSum);
+        if(prevPairs == null) {
+            continue;
+        }
+        for(List<Integer> pair : prevPairs) {
+          if(pair.get(1) < i) {
+            set.add(Arrays.asList(nums[pair.get(0)], nums[pair.get(1)], nums[i], nums[j]));
+          }
+        }
+       }
+     }
+     return new ArrayList<>(set);
+   }
+ }
+
+```
+
+
+
+
