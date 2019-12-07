@@ -88,8 +88,8 @@ class Solution {
 Time = O(n^2)  
 Space = O(n)  
 那既然这样time已经到了O(n^2)了，我们如果先排序，再用twoSumSorted的方法，还能再优化下空间  
-Runtime: 34 ms, faster than 52.58% of Java online submissions for 3Sum.
-Memory Usage: 44.7 MB, less than 99.65% of Java online submissions for 3Sum.
+Runtime: 34 ms, faster than 52.58% of Java online submissions for 3Sum.  
+Memory Usage: 44.7 MB, less than 99.65% of Java online submissions for 3Sum.  
 ```java
 class Solution {
   public List<List<Integer>> threeSum(int[] nums) {
@@ -167,7 +167,7 @@ class Solution {
  }
 
 ```
-
+另外这两个for loop还可以写在一起，更巧妙一些，这里就不再深究了。  
 
 
 
