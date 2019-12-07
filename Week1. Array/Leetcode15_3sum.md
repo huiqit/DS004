@@ -13,8 +13,7 @@
 * return index or value or boolean? 如果有多组解，是都return还是任意一个？
 ...  
   
-最常见的：对于unsorted的int array，没有duplicates且只有唯一一个解的来说，也就是[Leetcode 第一题](https://leetcode.com/problems/two-sum/)  
-#### unsorted, no duplicates  
+最常见的：对于unsorted的int array，没有duplicates且只有唯一一个解的来说，也就是[Leetcode 第一题](https://leetcode.com/problems/two-sum/)   
 最最基本的想法，就是锁定一个数，在它后面找另一个呗，那就是两层循环：  
 Time complexity = O(n^2)  
 Space = O(1)  
@@ -63,12 +62,36 @@ class Solution {
   }
 }
 ```
+那对于sorted array呢？会不会有更优的解法？数组有了顺序之后，当前x+y </> target时，我们就有了移动的方向，所以用two pointers.  
+```java
+class Solution {
+  public boolean twoSum(int[] nums, int target) {
+    int i = 0;
+    int j = nums.length - 1;
+    while(i < j) {
+      if(nums[i] + nums[j] == target) {
+        return true;
+      } else if (nums[i] + nums[j] < target) {
+        i++;
+      } else {
+        j--;
+      }
+    }
+    return false;
+  }
+}
+```
 
 ### 3Sum
-思路：在2Sum的基础上，其实就是把target当作了0-a，即要找到 b + c = 0 - a.  
+思路：在2Sum的基础上，其实就是把target当作了0-a，即要找到 b + c = 0 - a. 
 那么就两层循环，对每个a，在它后面找是否有合适的b, c  
+即：for each a :  
+      TwoSumUnsorted(a之后）
 Time = O(n^2)  
 Space = O(n)  
+那既然这样time已经到了O(n^2)了，我们如果先排序，再用twoSumSorted的方法，还能再优化下空间  
+Runtime: 34 ms, faster than 52.58% of Java online submissions for 3Sum.
+Memory Usage: 44.7 MB, less than 99.65% of Java online submissions for 3Sum.
 ```java
 class Solution {
   public List<List<Integer>> threeSum(int[] nums) {
@@ -77,14 +100,25 @@ class Solution {
       return res;
     }
     Arrays.sort(nums);
+    if(i > 0 && nums[i] == nums[i-1]) { //这里也要跳过所有相同元素
+      continue;
+    } 
     for(int i = 0; i < nums.length - 2; i++) {
-      // find 
-      Set<Integer> set = new HashSet<>();
-      for(int j = i + 1; j < nums.length - 1; j++) {
-        if(set.contains(-nums[i]-nums[j])) {
-          res.add(new ArrayList<>(nums[i], -nums[i]-nums[j], nums[j]));
+      // use two sum for sorted array to solve it, target = 0-nums[i]
+      int left = i + 1;
+      int right = nums.length - 1;
+      while(left < right) {
+        if(nums[left] + nums[right] == -nums[i]) {
+          res.add(Arrays.asList(nums[i], nums[left], nums[right]);
+          left ++;
+          while(left < right && nums[left] == nums[left-1]) { //这里需要跳过所有相同元素，因为题目要求了不要返回duplicates
+            left ++; 
+          }
+        } else if (nums[left] + nums[right] < -nums[i]) {
+          left ++;
+        } else {
+          right --;
         }
-        set.add(nums[j]);
       }
     }
     return res;
