@@ -111,7 +111,9 @@ class Solution4 {
    * Total Time = kn*(1+1/2+1/4+...) = O(2kn) = O(kn) 
    * Space = O(kn)
 * k way merge  
-   * minHeap 无法
+   * minHeap 无法generate出相同元素 还是要每个元素看一遍
+   * not work well 
+   * 能做，但是时间复杂度不会优于前两种方法 O(kn*logk) 
 
 
 
