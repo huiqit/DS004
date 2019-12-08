@@ -167,7 +167,7 @@ class Solution {
  }
 
 ```
-另外这两个for loop还可以写在一起，更巧妙一些，这里就不再深究了。  
+另外这两个for loop还可以写在一起，更巧妙一些，#TODO  
 
 
 
