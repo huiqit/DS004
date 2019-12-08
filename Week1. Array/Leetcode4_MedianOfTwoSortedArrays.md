@@ -30,4 +30,38 @@ amid = aleft + k/2 - 1; -1 因为是index
 算好了index要有boundary check，如果越界了那就设为max，因为要保留a里的数。(tips)  
 假设a array有3个数，b里有10个数，找第10小的那不可能在b的前5个元素里，因为b的前5个+a全部才8个数，所以一定能把b的前k/2删掉，那就把a的这个值设为最大值来保证a不被删掉。  
 
-
+```java
+// Runtime: 2 ms, faster than 99.97% of Java online submissions for Median of Two Sorted Arrays.
+// Memory Usage: 46.3 MB, less than 91.67% of Java online submissions for Median of Two Sorted Arrays.
+class Solution {
+  public double findMedian(int[] nums1, int[] nums2) {
+    int len = nums1.length + nums2.length;
+    if(len % 2 == 0) {
+      return (kth(nums1, nums2, 0, 0, len/2) + kth(nums1, nums2, 0, 0, len/2 + 1)) / (double)2;
+    } else {
+      return kth(nums1, nums2, 0, 0, len/2 + 1);
+    }
+  }
+  private int kth(int[] a, int[] b, int aleft, int bleft, int k) {
+    if(aleft >= a.length) {
+      return b[bleft + k - 1];
+    }
+    if(bleft >= b.length) {
+      return a[aleft + k - 1];
+    } 
+    if(k == 1) {
+      return Math.min(a[aleft], b[bleft]);
+    } 
+    int amid = aleft + k / 2 - 1;
+    int bmid = bleft + k / 2 - 1;
+    int aval = amid >= a.length ? Integer.MAX_VALUE : a[amid];
+    int bval = bmid >= b.length ? Integer.MAX_VALUE : b[bmid];
+    
+    if(aval <= bval) {
+      return kth(a, b, amid + 1, bleft, k - k / 2);
+    } else {
+      return kth(a, b, aleft, bmid + 1, k - k / 2);
+    }
+  }
+}
+```
