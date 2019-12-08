@@ -23,6 +23,41 @@ for each element in smaller array {
 4. 如果要optimze for space呢？--> **先sort**  
 
 所以这一题我们可以用solution3，或者4+1即先sort再2pointers。  
+Leetcode这题有duplicates，所以Solution3只用一个hashSet是不够的，升级为hashMap:  
+```java
+// Runtime: 2 ms, faster than 91.28% of Java online submissions for Intersection of Two Arrays II.
+// Memory Usage: 36.5 MB, less than 83.87% of Java online submissions for Intersection of Two Arrays II.
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        if(nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) {
+            return new int[]{};
+        }
+        List<Integer> resList = new ArrayList<>();
+        
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int n : nums1) {
+            Integer count = map.getOrDefault(n, 0);
+            count ++;
+            map.put(n, count);
+        }
+        
+        for(int n : nums2) {
+            Integer count = map.get(n);
+            if(count != null && count > 0) {
+                resList.add(n);
+                count --;
+                map.put(n, count);
+            }
+        }
+        
+        int[] res = new int[resList.size()];
+        for(int i = 0; i < res.length; i++) {
+            res[i] = resList.get(i);
+        }
+        return res;
+    }
+}
+```
 ```java
 // Runtime: 2 ms, faster than 91.28% of Java online submissions for Intersection of Two Arrays II.
 // Memory Usage: 36.3 MB, less than 83.87% of Java online submissions for Intersection of Two Arrays II.
