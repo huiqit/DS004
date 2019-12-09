@@ -5,7 +5,7 @@ Remove all elements from a linked list of integers that have value val.
 操作：  
 1. 用一个dummyHead，因为有可能原来的head就是这个value，那就不能返回之前的head了，甚至可能返回null；
 2. 用几个指针：
-  * prev: 最后要返回的linked list的tail；
+  * prev: 最后要返回的linked list的tail；prev之前是要保留的那些listNode
   * curr: 在iterate原array的当前node；
 3. 操作：
   * 如果curr的值等于val，那就继续直接看下一个；
