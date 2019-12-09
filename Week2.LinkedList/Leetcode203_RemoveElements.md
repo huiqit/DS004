@@ -10,8 +10,12 @@ Remove all elements from a linked list of integers that have value val.
 3. 操作：
   * 如果curr的值等于val，那就继续直接看下一个；
   * 如果不相等，也就是要保留这个值，设置prev.next = curr，然后两个指针都要移动到下一个。
+Time = O(n)  
+Space = O(1)  
 
 ```java
+// Runtime: 1 ms, faster than 98.69% of Java online submissions for Remove Linked List Elements.
+// Memory Usage: 40 MB, less than 100.00% of Java online submissions for Remove Linked List Elements.
 class Solution {
   public ListNode remove(ListNode head, int val) {
     ListNode dummyHead = new ListNode(0);
