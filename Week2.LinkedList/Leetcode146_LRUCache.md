@@ -1,6 +1,6 @@
 ## Leetcode146. LRU cache
 这是一道相当高频的题了  
-LRU means least recently used, it is a cache eviction policies. 
+LRU means least recently used, it is a cache eviction policies.   
 cache就是缓存，为了加快访问速度的，但是它有一定的容量限制，所以当达到容量上限时，就把那些很久不用的信息踢掉。  
 具体的operations就是get & put，往里面读/写信息  
 1. get info，这里我们需要一个能够快速读信息的data structure --> HashMap O(1) 时间可以做到  
