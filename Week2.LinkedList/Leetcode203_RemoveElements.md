@@ -1,8 +1,8 @@
 ## Leetcode203. Remove LinkedList Element
-Remove all elements from a linked list of integers that have value val.
-就是在这个LL里把某个值删掉。
-思路：过一遍这个LinkedList，遇到这个value时，就跳过它。
-操作：
+Remove all elements from a linked list of integers that have value val.  
+就是在这个LL里把某个值删掉。  
+思路：过一遍这个LinkedList，遇到这个value时，就跳过它。  
+操作：  
 1. 用一个dummyHead，因为有可能原来的head就是这个value，那就不能返回之前的head了，甚至可能返回null；
 2. 用几个指针：
   * prev: 最后要返回的linked list的tail；
