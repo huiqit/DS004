@@ -18,7 +18,93 @@ LinkedList: <key, value> --> <key, value> --> ...
   * 如果没有，那就看cache里还有没有足够的空间，
     * 如果有空，那就直接加进去就好了，即appendHead;
     * 如果没空了，那就得删掉least recently used 即 删除tail，再把新的加进来 即 appendHead。
-相信已经说的很清楚了，看代码吧：
+已经说的很清楚了，看代码吧：
+```java
+class LRUCache {
+    public static class Node {
+        int key;
+        int val;
+        Node next;
+        Node prev;
+        public Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+        }
+    }
+    
+    Map<Integer, Node> map = new HashMap<>();
+    private Node head;
+    private Node tail;
+    private int cap;
+    
+    public LRUCache(int capacity) {
+        cap = capacity;
+    }
+      
+    public int get(int key) {
+        Node node = map.get(key);
+        if(node == null) {
+            return -1;
+        } else {
+            int res = node.val;
+            remove(node);
+            appendHead(node);
+            return res;
+        }
+    }
+    
+    public void put(int key, int value) {
+        // 先check是不是有这个
+        Node node = map.get(key);
+        if(node != null) {
+            node.val = value;
+            // 把这个node放在最前面去
+            remove(node);
+            appendHead(node);
+        } else {
+            node = new Node(key, value);
+            if(map.size() < cap) {
+                appendHead(node);
+                map.put(key, node);
+            } else {
+                // remove the least recently used one
+                map.remove(tail.key);
+                remove(tail);
+                appendHead(node);
+                map.put(key, node);
+            }
+        }
+    }
+    
+    private void appendHead(Node node) {
+        if(head == null) {
+            head = tail = node;
+        } else {
+            node.next = head;
+            head.prev = node;
+            head = node;
+        } 
+    }
 
-
+    private void remove(Node node) {
+        if(head == tail) {
+            head = tail = null;
+        } else {
+            if(head == node) {
+                head = head.next;
+                node.next = null;
+            } else if (tail == node) {
+                tail = tail.prev;
+                tail.next = null;
+                node.prev = null;
+            } else {
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+                node.prev = null;
+                node.next = null;
+            }
+        }
+    }
+}
+```
 
