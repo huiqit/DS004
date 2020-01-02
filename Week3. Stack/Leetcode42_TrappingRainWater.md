@@ -33,7 +33,38 @@ class Solution {
   }
 }
 ```
-这个方法时间已经是O(n)最优了，但是占用了O(n)的空间，我们想办法去优化空间。  
-
-
+这个方法时间已经是O(n)最优了，但是占用了O(n)的空间，我们想办法去优化空间。 
+目标是找rightMax, leftMax，方法是two pointers 谁小移谁, 用两个变量记录rightMax, leftMax    
+假设两头的柱子无法蓄水，然后站在当前位置看下一个柱子能蓄水多少，那就是leftMax/rightMax - 柱子高度  
+证明：归纳法  
+```java
+class Solution {
+// Runtime: 1 ms, faster than 93.66% of Java online submissions for Trapping Rain Water.
+// Memory Usage: 37.2 MB, less than 98.63% of Java online submissions for Trapping Rain Water.
+  public int trap(int[] height) {
+    if(height == null || height.length == 0) {
+      return 0;
+    }
+    int leftMax = height[0];
+    int rightMax = height[height.length-1];
+    int i = 0;
+    int j = height.length-1;
+    int sum = 0;
+    while(i < j) {
+      // 先更新这俩
+      leftMax = Math.max(leftMax, height[i]);
+      rightMax = Math.max(rightMax, height[j]);
+      // 再计算下一个小柱子的蓄水量，并移动i, j
+      if(height[i] < height[j]) {
+        sum += leftMax - height[i];
+        i++;
+      } else {
+        sum += rightMax - height[j];
+        j--;
+      }
+    }
+    return sum;
+  }
+}
+```
 
