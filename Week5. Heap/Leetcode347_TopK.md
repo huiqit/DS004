@@ -2,7 +2,7 @@
 题目：给一组数，找到出现最多的前k个。  
 思路：按frequency排个序，然后再取前k个。
 
-'''java
+```java
 class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -33,4 +33,4 @@ class Solution {
         return res;
     }
 }
-'''
+```
