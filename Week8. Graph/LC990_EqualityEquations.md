@@ -1,3 +1,4 @@
+```java
 class Solution {
     int[] uf = new int[26];
     public boolean equationsPossible(String[] equations) {
@@ -17,3 +18,4 @@ class Solution {
     }
     
 }
+```
