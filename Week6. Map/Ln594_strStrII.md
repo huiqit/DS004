@@ -1,4 +1,4 @@
-
+[Link](https://www.lintcode.com/problem/strstr-ii/description)
 ```java
 public int strStr2(String source, String target) {
 
